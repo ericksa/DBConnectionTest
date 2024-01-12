@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>acsdal</groupId>
+	<artifactId>RedshiftJDBCProxyTest</artifactId>
+	<packaging>jar</packaging>
+
+	<version>2.6.0</version>
+	<!-- - needed to update the war with the appropriate commit hash -->
+	<scm>
+		<connection>
+			scm:git:https://bitbucket.org/spinsystems/acsdal-sql-proxy-service.git
+		</connection>
+		<url>https://bitbucket.org/spinsystems/acsdal-sql-proxy-service.git</url>
+	</scm>
+
+	<name>RedshiftJDBCProxyTest</name>
+	<description>The Oracle PROXY SQL interface provides an Apache Camel based
+		application that connects an external client to a SQL DB but re-routes
+		the connection through a proxy.
+	</description>
+
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+
+	<dependencies>
+		<!-- ... other dependencies ... -->
+<dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-core</artifactId>
+      <version>1.12.23</version>
+      <scope>runtime</scope>
+      <optional>true</optional>
+</dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-redshift</artifactId>
+      <version>1.12.23</version>
+      <scope>runtime</scope>
+      <optional>true</optional>
+</dependency>
+<dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-sts</artifactId>
+      <version>1.12.23</version>
+      <scope>runtime</scope>
+      <optional>true</optional>
+</dependency>
+		<dependency>
+    <groupId>com.amazon.redshift</groupId>
+    <artifactId>redshift-jdbc42</artifactId>
+			<version>2.1.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-api</artifactId>
+			<version>8.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- SLF4J API -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.32</version>
+		</dependency>
+	</dependencies>
+<build>
+    <plugins>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.4.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>test.TestRedshiftConnection</mainClass> <!-- Corrected main class reference -->
+                    </manifest>
+                </archive>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>make-assembly</id> <!-- This is used during 'package' phase -->
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+<repositories>
+    <repository>
+      <id>redshift</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+</repositories>
+</project>
